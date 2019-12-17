@@ -1,0 +1,22 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker build -t yujishen/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run -e CI=true yujishen/react-test npm test
+
+after_success:
+    - docker build -t yujishen/multi-client ./client
+    - docker build -t yujishen/multi-nginx ./nginx
+    - docker build -t yujishen/multi-server ./server
+    - docker build -t yujishen/multi-worker ./worker
+    # Login Docker CLI
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    # Push images to Docker Hub
+    - docker push yujishen/multi-client
+    - docker push yujishen/multi-nginx
+    - docker push yujishen/multi-worker
+    - docker push yujishen/multi-server
