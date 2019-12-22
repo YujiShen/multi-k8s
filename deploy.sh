@@ -9,6 +9,6 @@ docker push yujishen/multi-server:$SHA
 docker push yujishen/multi-worker:$SHA
 
 kubectl apply -f k8s
-kubectl set image deployments/server-deployments server=yujishen/multi-server:$SHA
-kubectl set image deployments/client-deployments client=yujishen/multi-client:$SHA
-kubectl set image deployments/workder-deployments workder=yujishen/multi-workder:$SHA
+kubectl set image deployments/server-deployment server=yujishen/multi-server:$SHA
+kubectl set image deployments/client-deployment client=yujishen/multi-client:$SHA
+kubectl set image deployments/workder-deployment workder=yujishen/multi-workder:$SHA
