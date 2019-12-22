@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: k8s-yuji-sh-tls
+spec:
+  secretName: k8s-yuji-sh-com
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: k8s.yuji.sh
+  dnsNames:
+    - k8s.yuji.sh
+  acme:
+    config:
+      - http01:
+          ingressClass: nginx
+        domains:
+          - k8s.yuji.sh
