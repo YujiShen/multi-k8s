@@ -19,7 +19,7 @@ before_install:
   - docker build -t yujishen/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true yujishen/multi-client npm run test
+  - docker run -e CI=true yujishen/react-test npm run test
 
 deploy:
   provider: script
