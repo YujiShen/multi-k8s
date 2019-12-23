@@ -1,0 +1,43 @@
+apiVersion: skaffold/v2alpha1
+kind: Config
+metadata:
+  name: complex-k-s
+build:
+  artifacts:
+  - image: yujishen/multi-client
+    context: client
+    docker:
+      dockerfile: Dockerfile.dev
+    sync:
+      infer:
+        - "**/*.js"
+        - "**/*.css"
+        - "**/*.html"
+  - image: yujishen/multi-server
+    context: server
+    docker:
+      dockerfile: Dockerfile.dev
+    sync:
+      infer:
+        - "**/*.js"
+  - image: yujishen/multi-worker
+    context: worker
+    docker:
+      dockerfile: Dockerfile.dev
+    sync:
+      infer:
+        - "**/*.js"
+deploy:
+  kubectl:
+    manifests:
+    - k8s/client-cluster-ip-service.yaml
+    - k8s/client-deployment.yaml
+    - k8s/database-persistent-volume-claim.yaml
+    - k8s/ingress-service.yaml
+    - k8s/postgres-cluster-ip-service.yaml
+    - k8s/postgres-deployment.yaml
+    - k8s/redis-cluster-ip-service.yaml
+    - k8s/redis-deployment.yaml
+    - k8s/server-cluster-ip-service.yaml
+    - k8s/server-deployment.yaml
+    - k8s/worker-deployment.yaml
